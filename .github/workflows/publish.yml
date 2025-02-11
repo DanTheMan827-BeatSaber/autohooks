@@ -1,0 +1,78 @@
+name: QPM publish
+
+on:
+  workflow_dispatch:
+
+jobs:
+  publish:
+    if: startsWith(github.ref, 'refs/tags/v')
+
+    permissions:
+      contents: write
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Extract version
+        id: version
+        run: |
+          TAG="${GITHUB_REF#refs/tags/}"
+          VERSION="${GITHUB_REF#refs/tags/v}"
+
+          split_versions() {
+            if [[ $# -ne 1 ]]; then
+              echo "Usage: split_versions merged_version"
+              return 1
+            fi
+
+            local merged_version=$1
+
+            # Parse merged_version
+            IFS='.' read -r major_b minor_b merged <<< "$merged_version"
+
+            # Extract patch_b
+            local patch_b=$(( merged & 0xFFFF ))
+
+            # Decode version_a
+            local encoded_version_a=$(( merged >> 16 ))
+            local major_a=$(( (encoded_version_a >> 32) & 0xFFFF ))
+            local minor_a=$(( (encoded_version_a >> 16) & 0xFFFF ))
+            local patch_a=$(( encoded_version_a & 0xFFFF ))
+
+            # Output the split versions
+            printf "%llu.%llu.%llu %llu.%llu.%llu\n" "$major_a" "$minor_a" "$patch_a" "$major_b" "$minor_b" "$patch_b"
+          }
+
+          IFS=' ' read -r HOOKS_VERSION AUTOHOOKS_VERSION <<< "$(split_versions "$VERSION")"
+
+          echo "version=$VERSION" | tee -a "$GITHUB_OUTPUT"
+          echo "hooks_version=$HOOKS_VERSION" | tee -a "$GITHUB_OUTPUT"
+          echo "autohooks_version=$AUTOHOOKS_VERSION" | tee -a "$GITHUB_OUTPUT"
+
+      - name: Setup qpm
+        uses: fernthedev/qpm-action@v1
+        with:
+          workflow_token: ${{ secrets.GITHUB_TOKEN }}
+          restore: true
+          resolve_ndk: false
+          cache: true
+          publish: "late"
+          publish_token: ${{ secrets.QPM_TOKEN }}
+          version: "${{ steps.version.outputs.version}}"
+          tag: "v${{ steps.version.outputs.version}}"
+
+      - name: Create a release using action-github-release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "Auto Hooks v${{ steps.version.outputs.autohooks_version}} for beatsaber-hook v${{ steps.version.outputs.hooks_version}}"
+          body: "Auto Hooks v${{ steps.version.outputs.autohooks_version}} built from beatsaber-hook v${{ steps.version.outputs.hooks_version}}"
+          tag_name: "v${{ steps.version.outputs.version}}"
+          draft: false
+          generate_release_notes: true
+          files: |
+            shared/hooks.hpp
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
