@@ -1,5 +1,4 @@
 {
-  "$schema": "https://raw.githubusercontent.com/QuestPackageManager/QPM.Package/refs/heads/main/qpm.shared.schema.json",
   "config": {
     "version": "0.4.0",
     "sharedDir": "shared",
@@ -7,7 +6,7 @@
     "info": {
       "name": "Auto Hooks",
       "id": "autohooks",
-      "version": "0.1.0",
+      "version": "0.1.1688854155296768",
       "url": "https://github.com/DanTheMan827-BeatSaber/autohooks",
       "additionalData": {
         "headersOnly": true,
@@ -69,7 +68,95 @@
       "qmodIncludeFiles": [],
       "qmodOutput": "./Auto Hooks.qmod"
     },
-    "dependencies": []
+    "dependencies": [
+      {
+        "id": "beatsaber-hook",
+        "versionRange": "=6.1.1",
+        "additionalData": {}
+      }
+    ]
   },
-  "restoredDependencies": []
+  "restoredDependencies": [
+    {
+      "dependency": {
+        "id": "libil2cpp",
+        "versionRange": "=0.4.0",
+        "additionalData": {
+          "headersOnly": true,
+          "compileOptions": {
+            "systemIncludes": [
+              "il2cpp/external/baselib/Include",
+              "il2cpp/external/baselib/Platforms/Android/Include"
+            ]
+          }
+        }
+      },
+      "version": "0.4.0"
+    },
+    {
+      "dependency": {
+        "id": "paper",
+        "versionRange": "=3.7.0",
+        "additionalData": {
+          "soLink": "https://github.com/Fernthedev/paperlog/releases/download/v3.7.0/libpaperlog.so",
+          "debugSoLink": "https://github.com/Fernthedev/paperlog/releases/download/v3.7.0/debug_libpaperlog.so",
+          "overrideSoName": "libpaperlog.so",
+          "modLink": "https://github.com/Fernthedev/paperlog/releases/download/v3.7.0/paperlog.qmod",
+          "branchName": "version/v3_7_0",
+          "compileOptions": {
+            "systemIncludes": [
+              "shared/utfcpp/source"
+            ]
+          },
+          "cmake": false
+        }
+      },
+      "version": "3.7.0"
+    },
+    {
+      "dependency": {
+        "id": "beatsaber-hook",
+        "versionRange": "=6.1.1",
+        "additionalData": {
+          "soLink": "https://github.com/QuestPackageManager/beatsaber-hook/releases/download/v6.1.1/libbeatsaber-hook_6_1_1.so",
+          "debugSoLink": "https://github.com/QuestPackageManager/beatsaber-hook/releases/download/v6.1.1/debug_libbeatsaber-hook_6_1_1.so",
+          "branchName": "version/v6_1_1",
+          "cmake": true
+        }
+      },
+      "version": "6.1.1"
+    },
+    {
+      "dependency": {
+        "id": "scotland2",
+        "versionRange": "=0.1.6",
+        "additionalData": {
+          "soLink": "https://github.com/sc2ad/scotland2/releases/download/v0.1.6/libsl2.so",
+          "debugSoLink": "https://github.com/sc2ad/scotland2/releases/download/v0.1.6/debug_libsl2.so",
+          "overrideSoName": "libsl2.so",
+          "branchName": "version/v0_1_6"
+        }
+      },
+      "version": "0.1.6"
+    },
+    {
+      "dependency": {
+        "id": "fmt",
+        "versionRange": "=11.0.2",
+        "additionalData": {
+          "headersOnly": true,
+          "branchName": "version/v11_0_2",
+          "compileOptions": {
+            "systemIncludes": [
+              "fmt/include/"
+            ],
+            "cppFlags": [
+              "-DFMT_HEADER_ONLY"
+            ]
+          }
+        }
+      },
+      "version": "11.0.2"
+    }
+  ]
 }

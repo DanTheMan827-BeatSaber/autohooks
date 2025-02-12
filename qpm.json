@@ -1,12 +1,11 @@
 {
-  "$schema": "https://raw.githubusercontent.com/QuestPackageManager/QPM.Package/refs/heads/main/qpm.schema.json",
   "version": "0.4.0",
   "sharedDir": "shared",
   "dependenciesDir": "extern",
   "info": {
     "name": "Auto Hooks",
     "id": "autohooks",
-    "version": "0.1.0",
+    "version": "0.1.1688854155296768",
     "url": "https://github.com/DanTheMan827-BeatSaber/autohooks",
     "additionalData": {
       "headersOnly": true,
@@ -68,5 +67,11 @@
     "qmodIncludeFiles": [],
     "qmodOutput": "./Auto Hooks.qmod"
   },
-  "dependencies": []
+  "dependencies": [
+    {
+      "id": "beatsaber-hook",
+      "versionRange": "=6.1.1",
+      "additionalData": {}
+    }
+  ]
 }
