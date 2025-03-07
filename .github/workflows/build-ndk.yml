@@ -113,6 +113,10 @@ jobs:
       - uses: seanmiddleditch/gha-setup-ninja@v3
         if: steps.tag_exists.outputs.exists == 'false'
 
+      - name: Make cache dir
+        run: |
+          mkdir -p /home/runner/.local/share/QPM-RS/cache
+
       - name: Setup qpm
         if: steps.tag_exists.outputs.exists == 'false'
         uses: fernthedev/qpm-action@v1
