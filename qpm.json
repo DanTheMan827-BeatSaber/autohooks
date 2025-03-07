@@ -6,7 +6,7 @@
   "info": {
     "name": "Auto Hooks",
     "id": "autohooks",
-    "version": "0.1.0",
+    "version": "0.1.1688867040198656",
     "url": "https://github.com/DanTheMan827-BeatSaber/autohooks",
     "additionalData": {
       "headersOnly": true,
@@ -68,5 +68,19 @@
     "qmodIncludeFiles": [],
     "qmodOutput": "./Auto Hooks.qmod"
   },
-  "dependencies": []
+  "dependencies": [
+    {
+      "id": "beatsaber-hook",
+      "versionRange": "=6.4.1",
+      "additionalData": {}
+    },
+    {
+      "id": "paper2_scotland2",
+      "versionRange": "^4.6.1",
+      "additionalData": {
+        "includeQmod": false,
+        "private": true
+      }
+    }
+  ]
 }
